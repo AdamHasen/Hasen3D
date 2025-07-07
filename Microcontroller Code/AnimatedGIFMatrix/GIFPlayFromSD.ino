@@ -1,4 +1,7 @@
 /* 
+   Created by Adam Hasen - Hasen.3D
+   By default, plays a single gif on loop forever on a 25 wide by 60 tall WS2812B Matrix configured in serpentine formation
+   
    REQUIRES the following Arduino libraries:
  - FastLED Library: https://github.com/pixelmatix/FastLED
  - AnimatedGIF Library:  https://github.com/bitbank2/AnimatedGIF
@@ -13,7 +16,7 @@
 #define LED_RES_Y 60 // Number of pixels tall of each INDIVIDUAL panel module.
 #define NUM_ROWS 1 // Number of rows of chained INDIVIDUAL PANELS
 #define NUM_COLS 1 // Number of INDIVIDUAL PANELS per ROW
-#define MAX_POWER_MILLIAMPS 13000
+#define MAX_POWER_MILLIAMPS 3000 // How much current to allocate to the entire matrix. DO NOT EXCEED your supply.
 
 const uint8_t MATRIX_WIDTH = LED_RES_X * NUM_COLS;
 const uint8_t MATRIX_HEIGHT = LED_RES_Y * NUM_ROWS;
@@ -127,31 +130,8 @@ int32_t GIFSeekFile(GIFFILE *pFile, int32_t iPosition)
   return pFile->iPos;
 } /* GIFSeekFile() */
 
-unsigned long start_tick = 0;
-
-// void ShowGIF(char *name)
-// {
-//   start_tick = millis();
-   
-//   if (gif.open(name, GIFOpenFile, GIFCloseFile, GIFReadFile, GIFSeekFile, GIFDraw))
-//   {
-//     x_offset = (MATRIX_WIDTH - gif.getCanvasWidth())/2;
-//     if (x_offset < 0) x_offset = 0;
-//     y_offset = (MATRIX_HEIGHT - gif.getCanvasHeight())/2;
-//     if (y_offset < 0) y_offset = 0;              
-//     memset(leds, 0, sizeof(leds)); 
-//     while (gif.playFrame(false, NULL))
-//     { 
-//       FastLED.show();
-//     }
-//     gif.close();
-//   }
-
-// } /* ShowGIF() */
-
 void ShowGIF(char *name)
 {
-    start_tick = millis();
     if (gif.open(name, GIFOpenFile, GIFCloseFile, GIFReadFile, GIFSeekFile, GIFDraw))
     {
         x_offset = (MATRIX_WIDTH - gif.getCanvasWidth()) / 2;
@@ -168,7 +148,7 @@ void ShowGIF(char *name)
             while (gif.playFrame(false, NULL))
             {
                 FastLED.show();
-                delay(30);
+                //delay(30); // Uncomment to reduce the speed of GIF playback
             }
             // Restart the GIF from the beginning
             gif.reset();
