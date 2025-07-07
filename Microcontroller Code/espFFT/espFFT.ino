@@ -1,3 +1,5 @@
+// Fixes and enhancements made by Adam Hasen
+// Original from https://github.com/s-marley/ESP32_FFT_VU
 // (Heavily) adapted from https://github.com/G6EJD/ESP32-8266-Audio-Spectrum-Display/blob/master/ESP32_Spectrum_Display_02.ino
 // Adjusted to allow brightness changes on press+hold, Auto-cycle for 3 button presses within 2 seconds
 // Edited to add Neomatrix support for easier compatibility with different layouts.
